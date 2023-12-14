@@ -11,17 +11,19 @@ const {
    getTopDeals,
    bestSelling,
    editProfile,
-   searchProducts
+   searchProducts,
+   newArrival
 } = require('../controllers/authController');
 const auth = require('../middlewares/authenticateUsers');
 
 router.post('/signup', signUp);
 router.post('/login', login);
 router.put('/reset/password', forgotPassword);
-router.get('/category/:id', getByCategory);
+router.get('/category', getByCategory);
 router.get('/all/products', getAllProducts);
-router.get('/single/product/:id', getSingleProduct);
+router.get('/single/product/:productName', getSingleProduct);
 router.get('/top/deals', getTopDeals);
+router.get('/new', newArrival);
 router.get('/best/selling', bestSelling);
 router.patch('/profile', auth('user'), editProfile);
 router.get('/search', searchProducts);

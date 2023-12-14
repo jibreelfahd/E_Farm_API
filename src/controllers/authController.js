@@ -99,16 +99,15 @@ exports.login = async (req, res) => {
 
 // @desc CHANGING USER PASSWORD
 exports.forgotPassword = async (req, res) => {
-   const { userId } = req.user
-   const { newPassword } = req.body;
+   const { inputEmail, newPassword } = req.body;
    try {
-      const user = await SignUpSchema.findOneAndUpdate({ _id: userId }, { password: newPassword}, {
+      const user = await SignUpSchema.findOneAndUpdate({ email: inputEmail }, { password: newPassword}, {
          new: true,
          runValidators: true
       });
 
       if(!user) {
-         res.status(404).json({ success: false, message: 'User does not exist' });
+         return res.status(404).json({ success: false, message: 'User does not exist' });
       }
 
       const userEmail = user.email;
@@ -116,8 +115,9 @@ exports.forgotPassword = async (req, res) => {
       const emailText = `Dear ${user.name}, your password has been reset to a new password successfully`; 
  
       await sendEmail(userEmail, emailSubject, emailText);
-      console.log('Email sent', result);
-      res.status(200).json({ success: true, user });
+      const token = createTokens(user._id, 'user');
+
+      res.status(200).json({ success: true, token });
    } catch (err) {
       console.log('Error from forgot password', err);
       res.status(500).json({ success: false, errorMessage: 'Sorry couldnt change password. Try Again!!' });
@@ -127,15 +127,17 @@ exports.forgotPassword = async (req, res) => {
 // @desc GET ALL ITMES BY CATEGORY
 exports.getByCategory = async(req, res) => {
    const { selectCategory } = req.query;
+   let queryObject = {};
    try {
-      const categories = await ProductSchema.find({
-         categories: selectCategory
-      });
+      if(selectCategory){
+         queryObject.category = { $regex: selectCategory, $options: 'i' }
+      }
+      const categories = await ProductSchema.find(queryObject);
 
       if (!categories) {
          return res.status(404).json({ success: false, message: 'No category found' });
       }
-      res.status(200).json({ success: true, categories });
+      res.status(200).json({ success: true, categories, nHits: categories.length });
    } catch (err) {
       console.log('Error from category', err);
       res.status(500).json({ success: false, errorMessage: 'Couldnt get resource. Try Again Later!!' });
@@ -146,7 +148,7 @@ exports.getByCategory = async(req, res) => {
 exports.getAllProducts = async (req, res) => {
    try {
       const products = await ProductSchema.find({});
-      res.status(200).json({ success: false, products });
+      res.status(200).json({ success: true, products });
    } catch (err) {
       console.log('Error from get all products', err);
       res.status(500).json({ success: false, errorMessage: 'Couldnt fetch all products. Try Again!!' });
@@ -155,9 +157,10 @@ exports.getAllProducts = async (req, res) => {
 
 // @desc GET SINGLE PRODUCTS
 exports.getSingleProduct = async (req, res) => {
-   const { productName } = req.query;
+   const { productName } = req.params;
+   const names = { $regex: productName, $options: 'i' }
    try {
-      const product = await ProductSchema.findOne({ name: productName });
+      const product = await ProductSchema.findOne({ name: names });
 
       if(!product) {
       return res.status(404).json({ success: false, message: 'Product not available' });
@@ -172,8 +175,8 @@ exports.getSingleProduct = async (req, res) => {
 // @desc GET ALL TOP DEALS PROOUCTS
 exports.getTopDeals = async (req, res) => {
    try {
-      const topDeals = await ProductSchema.find({ topDeals });
-      res.status(200).json({ success: true, topDeals });
+      const topDeals = await ProductSchema.find({ topDeals: true });
+      res.status(200).json({ success: true, topDeals, nHit: topDeals.length });
    } catch (err) {
       console.log('Error from top deals', err);
       res.status(500).json({ success: false, errorMessage: 'Internal Server Error. Couldnt fetch products' });
@@ -196,7 +199,7 @@ exports.checkoutOrder = async (req, res) => {
 exports.newArrival = async (req, res) => {
    try {
       const newArrival = await ProductSchema.find({}).sort('createdAt');
-      res.status(200).json({ success: true, newArrival });   
+      res.status(200).json({ success: true, newArrival, nHit: newArrival.length });   
       } catch (err) {
       console.log(`Error from new arrivals`, err);
       res.status(500).json({ success: false, message: 'Request could not be completed' });
@@ -206,8 +209,8 @@ exports.newArrival = async (req, res) => {
 // @desc BEST SELLING PRODUCTS
 exports.bestSelling = async(req, res) => {
    try {
-      const bestSelling = await ProductSchema.find({ successfulPurchase });
-      res.status(200).json({ success: true, bestSelling });
+      const bestSelling = await ProductSchema.find({ successfulPurchase: true });
+      res.status(200).json({ success: true, bestSelling, nHit: bestSelling.length });
    } catch (err) {
       console.log(`Error from best selling`, err);
       res.status(500).json({ success: false, message: 'Request could not be completed' });
