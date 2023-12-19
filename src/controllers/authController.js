@@ -4,9 +4,10 @@ const bcrypt = require('bcryptjs');
 const paystack = require('paystack')(process.env.PAYSTACK);
 
 // @desc IMPORTS
-const SignUpSchema = require('../models/userModel');
+const UserSchema = require('../models/userModel');
 const ProductSchema = require('../models/productModel');
 const CheckoutSchema = require('../models/checkoutModel');
+const Cart = require('../models/cartModel');
 const sendEmail  = require('../utils/sendEmail');
 
 // @desc Creating webtokens to store in a cookie
@@ -53,7 +54,7 @@ exports.signUp = async (req, res) => {
       if (password !== confirmPassword) {
          return res.status(401).json({ sucess: false, confirmErrorMessage: 'Password do not match'});
       }
-      const user = await SignUpSchema.create({
+      const user = await UserSchema.create({
          name,
          email, 
          phoneNumber,
@@ -80,7 +81,7 @@ exports.login = async (req, res) => {
    const { email, phoneNumber, password } = req.body;
 
    try {
-      const user = await SignUpSchema.login(email, phoneNumber, password);
+      const user = await UserSchema.login(email, phoneNumber, password);
 
       // @desc Sending an email to the user whenever they sign up
       const userEmail = user.email;
@@ -101,13 +102,16 @@ exports.login = async (req, res) => {
 exports.forgotPassword = async (req, res) => {
    const { inputEmail, newPassword } = req.body;
    try {
-      const user = await SignUpSchema.findOneAndUpdate({ email: inputEmail }, { password: newPassword}, {
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(newPassword, salt);
+
+      const user = await UserSchema.findOneAndUpdate({ email: inputEmail }, { password: hashPassword}, {
          new: true,
          runValidators: true
       });
 
       if(!user) {
-         return res.status(404).json({ success: false, message: 'User does not exist' });
+         return res.status(404).json({ success: false, message: 'Account does not exist' });
       }
 
       const userEmail = user.email;
@@ -182,18 +186,19 @@ exports.getTopDeals = async (req, res) => {
       res.status(500).json({ success: false, errorMessage: 'Internal Server Error. Couldnt fetch products' });
    }
 }
-// @desc CHECKOUT ORDER
-exports.checkoutOrder = async (req, res) => {
-   const { address, apartment, town } = req.body;
-   const { userId } = req.user
-   try {
-      const chekout = await CheckoutSchema.create({ userID: userId, address, apartment, town }).populate('name', 'email', 'phoneNumber');
 
-   } catch (err) {
-      console.log('Error from checkout products', err);
-      res.status(500).json({ success: false, message: 'Something happened, we are working on it' });
-   }
-}
+// @desc CHECKOUT ORDER
+// exports.checkoutOrder = async (req, res) => {
+//    const { address, apartment, town } = req.body;
+//    const { userId } = req.user
+//    try {
+//       const chekout = await CheckoutSchema.create({ userID: userId, address, apartment, town }).populate('name', 'email', 'phoneNumber');
+
+//    } catch (err) {
+//       console.log('Error from checkout products', err);
+//       res.status(500).json({ success: false, message: 'Something happened, we are working on it' });
+//    }
+// }
 
 // @desc NEW ARRIVALS
 exports.newArrival = async (req, res) => {
@@ -222,29 +227,31 @@ exports.editProfile = async (req, res) => {
    const { name, email, address, password, confirmPassword, currentPassword } = req.body;
    const { userId } = req.user;
    try {
-      const profile = await CheckoutSchema.findOneAndUpdate({_id: userId }, {
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(password, salt);
+      const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
+
+      const profile = await UserSchema.findOneAndUpdate({_id: userId }, {
          name: name,
          email: email,
          address: address,
-         password: password,
-         confirmPassword
+         password: hashPassword,
+         confirmPassword: hashConfirmPassword
       }, { new: true, runValidators: true });
 
       if (password !== confirmPassword) {
          return res.status(401).json({ sucess: false, confirmErrorMessage: 'Password do not match'});
       }
 
-      const findUser = await SignUpSchema.findOne({ _id: userId });
+      const findUser = await UserSchema.findOne({ _id: userId });
       if(findUser) {
-         const authUser = bcrypt.compare(currentPassword, findUser.password);
-         if(authUser) {
-            return authUser;
-         }
+         const authUser = await bcrypt.compare(currentPassword, findUser.password);
+         if(authUser) return authUser;
       } else{
-         res.status(404).json({ success: false, message: 'Password Incorrect'});
+         return res.status(404).json({ success: false, profile, message: 'Password Incorrect'});
       }
 
-      res.status(200).json({ success: true, profile, message: 'Information changed successfully' });
+      res.status(200).json({ success: true, message: 'Information changed successfully' });
    } catch (err) {
       console.log(`Error from edit profile`, err);
       res.status(500).json({ success: false, message: 'Request could not be completed' });
@@ -256,11 +263,15 @@ exports.searchProducts = async(req, res) => {
    const { name } = req.query;
    try {
       let queryObject = {};
-
-      if(name) {
+      switch (true) {
+         case name:
          queryObject.name = { $regex: name, $options: 'i' };
+            break;
+         default:
+            return res.status(404).json({ success: false, message: 'No item found' }); 
+            break;
       }
-
+      
       const product = await ProductSchema.find(queryObject);
       res.status(200).json({ success: true, product, nbHits: product.length });
    } catch (err) {
@@ -282,7 +293,7 @@ exports.userPayment = async(req, res) => {
       }
 
       //checking if the user 
-      const user = await SignUpSchema.find({ _id: userId });
+      const user = await UserSchema.find({ _id: userId });
       if(!user) {
          res.status(404).json({ success: false, user });
       }
@@ -309,7 +320,7 @@ exports.addToCart = async (req, res) => {
  const { quantity } = req.body;
  const { userId } = req.user
  try {
-   const checkUser = await SignUpSchema.find({ _id: userId });
+   const checkUser = await UserSchema.find({ _id: userId });
    if(!checkUser) {
       
    }

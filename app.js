@@ -14,6 +14,7 @@ const { notFound } = require('./src/middlewares/404middleware');
 // @desc-MIDDLEWARES
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static('./src/public/e-gona'));
 app.use(cookieParser());
 app.use(cors('*'));
 
@@ -39,4 +40,4 @@ app.use('/e-gona/farmer', farmerRouter);
 
 
 // @desc middleware for unavailable resources
-app.use('/not-found', notFound);
+app.use(notFound);

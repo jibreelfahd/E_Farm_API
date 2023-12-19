@@ -1,0 +1,374 @@
+[
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Cow",
+      "price": 200000, 
+      "weight": "500kg", 
+      "description": "Healthy cow for sale", 
+      "category": "Livestock",
+      "topDeals": true,
+      "successfulPurchase": false 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Chicken", 
+      "price": 4000, 
+      "weight": "2kg", 
+      "description": "Fresh chicken for sale", 
+      "category": "Livestock",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Goat", 
+      "price": 3000, 
+      "weight": "50kg", 
+      "description": "Young goat available", 
+      "category": "Livestock",
+      "topDeals": true,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Pig", 
+      "price": 15000, 
+      "weight": "30kg", 
+      "description": "Piglet for sale", 
+      "category": "Livestock",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Sheep", 
+      "price": 100000, 
+      "weight": "40kg", 
+      "description": "Healthy sheep available", 
+      "category": "Livestock",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Apple", 
+      "price": 1500, 
+      "weight": "0.2kg", 
+      "description": "5 pieces of Fresh and juicy apples", 
+      "category": "Fruits",
+      "topDeals": false,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Banana", 
+      "price": 2000, 
+      "weight": "0.15kg", 
+      "description": "A bunch of ripe and delicious bananas", 
+      "category": "Fruits",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Orange", 
+      "price": 1000, 
+      "weight": "0.3kg", 
+      "description": "10 pieces of sweet and tangy oranges", 
+      "category": "Fruits",
+      "topDeals": true,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Grapes", 
+      "price": 1500, 
+      "weight": "0.25kg", 
+      "description": "A small pack of seedless grapes", 
+      "category": "Fruits",
+      "topDeals": true,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Watermelon", 
+      "price": 1000, 
+      "weight": "5kg", 
+      "description": "One very big and refreshing watermelon", 
+      "category": "Fruits",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Potato", 
+      "price": 40000, 
+      "weight": "0.2kg", 
+      "description": "A bag of fresh potatoes", 
+      "category": "Tubers",
+      "topDeals": false,
+      "successfulPurchase": false 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Sweet Potato", 
+      "price": 15000, 
+      "weight": "0.25kg", 
+      "description": "A Bag of sweet and nutritious sweet potatoes", 
+      "category": "Tubers",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Yam", 
+      "price": 1500, 
+      "weight": "0.3kg",
+      "description": "One tiber of quality Yam", 
+      "category": "Tubers",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Cassava", 
+      "price": 16000, 
+      "weight": "0.2kg", 
+      "description": "A bag of healthy cassava roots", 
+      "category": "Tubers",
+      "topDeals": false,
+      "successfulPurchase": false 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Beetroot", 
+      "price": 2000, 
+      "weight": "0.25kg", 
+      "description": "One fresh beetroot", 
+      "category": "Tubers",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Rice", 
+      "price": 50000, 
+      "weight": "50kg", 
+      "description": "A bag of high-quality rice grains", 
+      "category": "Grains",
+      "topDeals": false,
+      "successfulPurchase": false 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Wheat", 
+      "price": 3000, 
+      "weight": "1kg", 
+      "description": "A small bag of Whole wheat grains", 
+      "category": "Grains",
+      "topDeals": true,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Maize", 
+      "price": 20000, 
+      "weight": "30kg", 
+      "description": "A very big bag of fresh maize kernels", 
+      "category": "Grains",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Carrot", 
+      "price": 3000, 
+      "weight": "3kg", 
+      "description": "Transparent container of fresh and crunchy carrots", 
+      "category": "Vegetable",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Spinach", 
+      "price": 700, 
+      "weight": "0.9kg", 
+      "description": "10 rolls of nutrient-packed spinach leaves", 
+      "category": "Vegetable",
+      "topDeals": true,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Tomato", 
+      "price": 9000, 
+      "weight": "10kg", 
+      "description": "Bug basket of ripe and red tomatoes", 
+      "category": "Vegetable",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Cucumber", 
+      "price": 3000, 
+      "weight": "1kg", 
+      "description": "10 peices of cool and refreshing cucumbers", 
+      "category": "Vegetable",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Bell Pepper", 
+      "price": 1500, 
+      "weight": "0.6kg", 
+      "description": "A filled zip lock container of colorful bell peppers", 
+      "category": "Vegetable",
+      "topDeals": false,
+      "successfulPurchase": false 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Coffee Beans", 
+      "price": 500, 
+      "weight": "1kg", 
+      "description": "A jar of premium coffee beans", 
+      "category": "Cash Crops",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Tea Leaves", 
+      "price": 700, 
+      "weight": "4kg", 
+      "description": "A small jar of high-quality tea leaves", 
+      "category": "Cash Crops",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Cocoa Beans", 
+      "price": 1500, 
+      "weight": "0.9kg", 
+      "description": "5 packets of fine cocoa beans for chocolate production", 
+      "category": "Cash Crops",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Sugarcane", 
+      "price": 1200, 
+      "weight": "1kg", 
+      "description": "10 pieces of sweet and juicy sugarcane", 
+      "category": "Cash Crops",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+ 
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Hoe", 
+      "price": 2000, 
+      "weight": "2kg", 
+      "description": "Durable farming hoe", 
+      "category": "Farm Tools",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Shovel", 
+      "price": 2500, 
+      "weight": "1.5kg", 
+      "description": "Heavy-duty shovel for various tasks", 
+      "category": "Farm Tools",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Rake", 
+      "price": 2800, 
+      "weight": "1kg", 
+      "description": "Sturdy rake for soil preparation", 
+      "category": "Farm Tools",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Wheelbarrow", 
+      "price": 15000, 
+      "weight": "5kg", 
+      "description": "Reliable wheelbarrow for transporting materials", 
+      "category": "Farm Tools",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Pruning Shears", 
+      "price": 3000, 
+      "weight": "0.5kg", 
+      "description": "Sharp pruning shears for trimming plants", 
+      "category": "Farm Tools",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Organic Compost", 
+      "price": 15000, 
+      "weight": "30kg", 
+      "description": "Nutrient-rich organic compost", 
+      "category": "Fertilizers",
+      "topDeals": true,
+      "successfulPurchase": false
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "NPK Fertilizer", 
+      "price": 25000, 
+      "weight": "23kg", 
+      "description": "Balanced NPK fertilizer for plant growth", 
+      "category": "Fertilizers",
+      "topDeals": false,
+      "successfulPurchase": false 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Fish Emulsion", 
+      "price": 19000, 
+      "weight": "10kg", 
+      "description": "Natural fish emulsion fertilizer", 
+      "category": "Fertilizers",
+      "topDeals": false,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Bone Meal", 
+      "price": 7000, 
+      "weight": "4kg", 
+      "description": "Bone meal for soil enrichment", 
+      "category": "Fertilizers",
+      "topDeals": true,
+      "successfulPurchase": true 
+   },
+   { 
+      "farmerID": "6579e79d2b310453a103fca1",
+      "name": "Seaweed Extract", 
+      "price": 8000, 
+      "weight": "8.3kg", 
+      "description": "Seaweed extract for plant health", 
+      "category": "Fertilizers",
+      "topDeals": true,
+      "successfulPurchase": false
+   }
+]

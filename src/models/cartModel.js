@@ -1,10 +1,25 @@
-cart: [{
-   productID: {
+const { Schema, model } = require('mongoose');
+
+// @IMPORTS
+const UserSchema = require('./userModel')
+const ProductSchema = require('./productModel')
+
+const cartSchema = new Schema({
+   userID: {
       type: Schema.Types.ObjectId,
-      ref: ProductSchema
+      ref: UserSchema
    },
-   quantity: {
-      type: String,
-      default: 1
-   }
-}]
+   cartItems: [{
+      productID: {
+         type: Schema.Types.ObjectId,
+         ref: ProductSchema
+      },
+      quantity: {
+         type: Number,
+         default: 1
+      }
+   }],
+});
+
+const Cart = model('cart', cartSchema);
+module.exports = Cart;

@@ -107,7 +107,10 @@ exports.forgotPassword = async (req, res) => {
    const { farmerId } = req.user
    const { newPassword } = req.body;
    try {
-      const user = await FarmerSchema.findOneAndUpdate({ _id: farmerId }, { password: newPassword}, {
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(newPassword, salt);
+
+      const user = await FarmerSchema.findOneAndUpdate({ _id: farmerId }, { password: hashPassword}, {
          new: true,
          runValidators: true
       });
@@ -131,6 +134,11 @@ exports.forgotPassword = async (req, res) => {
 exports.createProducts = async(req, res) => {
    const { farmerId } = req.user
    const { name, price, weight, description, category } = req.body;
+   const productPicture = req.files
+   // const productPictureUrl = productPicture.map(files => ({
+   //    originalname: files.originalname,
+   //    path: files.path
+   // }));
 
    try {
       const products = await ProductSchema.create({

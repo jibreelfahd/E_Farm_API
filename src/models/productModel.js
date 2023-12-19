@@ -9,7 +9,8 @@ const productSchema = new Schema({
    farmerID: {
       type: Schema.Types.ObjectId,
       ref: FarmerSchema,
-      default: null
+      default: null,
+      required: true
    },
    userID: {
       type: Schema.Types.ObjectId,
@@ -35,7 +36,6 @@ const productSchema = new Schema({
    },
    category: {
       type: String,
-      enum: [ 'Livestock', 'Grains' ]
    },
    review: {
       type: String,

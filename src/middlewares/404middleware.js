@@ -1,3 +1,5 @@
+const path = require('path');
+
 exports.notFound = (req, res) => {
-   res.status(404).send('Resource not found');
+   res.status(404).sendFile(path.resolve('src', 'public', 'e-gona', 'error.html'));
 }
