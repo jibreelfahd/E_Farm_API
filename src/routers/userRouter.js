@@ -20,6 +20,7 @@ router.post('/signup', signUp);
 router.post('/login', login);
 router.put('/reset/password', forgotPassword);
 router.get('/category', getByCategory);
+router.get('/category/:selectCategory', getByCategory);
 router.get('/all/products', getAllProducts);
 router.get('/single/product/:productName', getSingleProduct);
 router.get('/top/deals', getTopDeals);

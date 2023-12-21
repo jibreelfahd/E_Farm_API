@@ -11,15 +11,15 @@ const Cart = require('../models/cartModel');
 const sendEmail  = require('../utils/sendEmail');
 
 // @desc Creating webtokens to store in a cookie
-const createTokens = (userId, userType) => {
-   return jwt.sign({ userId, userType }, process.env.JWT_SECRET , {
+const createTokens = (userId, userName, userType) => {
+   return jwt.sign({ userId, userName ,userType }, process.env.JWT_SECRET , {
       expiresIn: '24h'
    });
 }
 
 // @desc Handling errors 
 const handleErrors = (err) => {
-   let error = {name: '', email: '', password: '', confirmErrorMessage: '', phoneNumber: ''};
+   let error = {name: '', email: '', password: '', phoneNumber: ''};
    console.log(err.message, err.code);
 
    // @desc validation errors
@@ -48,18 +48,14 @@ const handleErrors = (err) => {
 
 // @desc Signing the user up 
 exports.signUp = async (req, res) => {
-   const { name, email, phoneNumber, password, confirmPassword} = req.body;
+   const { name, email, phoneNumber, password} = req.body;
 
    try {
-      if (password !== confirmPassword) {
-         return res.status(401).json({ sucess: false, confirmErrorMessage: 'Password do not match'});
-      }
       const user = await UserSchema.create({
          name,
          email, 
          phoneNumber,
          password,
-         confirmPassword
       });   
 
       // @desc Sending an email to the user whenever they sign up
@@ -90,7 +86,7 @@ exports.login = async (req, res) => {
  
       await sendEmail(userEmail, emailSubject, emailText);
 
-      const token = createTokens(user._id, 'user');
+      const token = createTokens(user._id, user.name, 'user');
       res.status(200).json({sucess: true, user: user._id, token });
    } catch (err) {
       const error = handleErrors(err);
@@ -130,7 +126,7 @@ exports.forgotPassword = async (req, res) => {
 
 // @desc GET ALL ITMES BY CATEGORY
 exports.getByCategory = async(req, res) => {
-   const { selectCategory } = req.query;
+   const { selectCategory } = req.params;
    let queryObject = {};
    try {
       if(selectCategory){

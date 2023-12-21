@@ -23,11 +23,6 @@ const userSchema = new Schema({
       type: String,
       required: [true, 'Enter a password'],
       minlength: [10, 'Password should be a combination of 10 characters']
-   },
-   confirmPassword: {
-      type: String,
-      required: true,
-      minlength: [10, 'Password should be a combination of 10 characters']
    }
 });
 
@@ -35,8 +30,6 @@ const userSchema = new Schema({
 userSchema.pre('save', async function(doc, next) {
    const salt = await bcrypt.genSalt();
    this.password = await bcrypt.hash(this.password, salt);
-   this.confirmPassword = await bcrypt.hash(this.confirmPassword, salt);
-   next()
 })
 
 

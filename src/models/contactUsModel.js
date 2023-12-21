@@ -18,7 +18,7 @@ const contactSchema = new mongoose.Schema({
       required: [true, 'Please enter a phone number'],
       unique: true
    },
-   message: {
+   messages: {
       type: String,
       required: false
    }

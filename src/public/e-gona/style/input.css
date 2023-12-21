@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@layer components {
+  .banner {
+    @apply bg-pakistan_green w-full;
+  }
+
+  .gbl-container {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .sign-card {
+    @apply flex flex-col mx-auto md:mx-0 md:ml-auto md:w-1200 md:h-500 md:mr-auto gap-16 w-96  md:flex-row;
+  }
+
+  .sign-container {
+    @apply flex justify-center items-center my-auto h-700;
+  }
+
+  .sign-form {
+    @apply h-700 flex justify-center items-center;
+  }
+
+  .btn {
+    @apply px-10 py-1.5 pb-2 w-64 bg-green-600 align-middle rounded-md text-white;
+  }
+
+  .active-link {
+    @apply border-b-pakistan_green border-b-4;
+  }
+
+  .custom-shadow {
+    box-shadow: 1px 2px 5px rgba(35, 35, 35, 0.1);
+  }
+
+  .custom-color {
+    color: #989898;
+  }
+
+  .open-menu {
+    @apply hidden;
+  }
+
+  /*.active-link:hover {*/
+  /*  @apply border-none mb-4;*/
+  /*}*/
+  .negate-active {
+    @layer mb-n4;
+  }
+
+  /*Hamburger menu*/
+  /*.mobile-container {*/
+  /*  @apply max-w-lg m-auto h-full text-white_smoke rounded-xl;*/
+  /*}*/
+  /*.topNav {*/
+  /*  @apply overflow-hidden relative;*/
+  /*}*/
+  /*.topNav #myLinks {*/
+  /*  @apply hidden;*/
+  /*}*/
+  /*.topNav a {*/
+  /*  @apply py-3.5 px-4 text-lg block;*/
+  /*}*/
+  /*.topNav a.icon {*/
+  /*  @apply bg-pakistan_green text-pakistan_green block absolute right-0 top-0;*/
+  /*}*/
+  /*.topNave a:hover {*/
+  /*  @apply bg-dark_pastel_green;*/
+  /*}*/
+  /*  Slide show*/
+  .mySlides {
+    @apply hidden w-full h-full mr-auto;
+  }
+
+  .slideshow-container {
+    @apply w-498 h-344 relative;
+  }
+
+  .text {
+    @apply text-gray-200 text-sm py-2 px-3 absolute bottom-0 mr-6 mx-auto w-full text-center;
+  }
+
+  .numbertext {
+    @apply text-gray-200 text-xs py-2 px-3 absolute top-0 left-[12rem];
+  }
+
+  .dot {
+    @apply h-6 w-6 mx-1 rounded-full inline-block bg-gray-400 transition-colors duration-1000;
+  }
+
+  .active {
+    @apply bg-gray-700;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0.4;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .card {
+    @apply w-270 h-350 flex flex-col gap-2;
+  }
+}

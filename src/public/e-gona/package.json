@@ -1,0 +1,16 @@
+{
+  "name": "e-gona",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nav.js",
+  "scripts": {
+    "build": "tailwindcss -i ./style/input.css -o public/styles.css",
+    "watch": "tailwindcss -i ./style/input.css -o public/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.6"
+  }
+}

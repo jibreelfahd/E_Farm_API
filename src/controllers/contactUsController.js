@@ -3,7 +3,7 @@ const sendEmail = require('../utils/sendEmail');
 
 // @desc Handling error 
 const handleError = (err) => {
-  let error = { email: '', phoneNumber: '' };
+  let error = { email: '', phoneNumber: '', phoneNumber: '', messages: ''};
   console.log(err.message, err.code);
    
   // @desc handling errors when certain conditions aren't met 
@@ -23,14 +23,14 @@ const handleError = (err) => {
 
 
 const contact_post = async (req, res) => {
-   const { name, email, phoneNumber, message } = req.body;
+   const { name, email, phoneNumber, messages } = req.body;
 
    try {
       const user = await ContactSchema.create({
          name,
          email,
          phoneNumber,
-         message
+         messages
       });
 
       const userEmail = user.email;
