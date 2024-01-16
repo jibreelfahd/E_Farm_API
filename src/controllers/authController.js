@@ -73,6 +73,7 @@ exports.signUp = async (req, res) => {
       const emailText = `We are delighted to have you on E-Gona, we are geared at offering you the best services when it comes to purchasing fresh and healthy agricultural products. We have carefully vetted all these products before bringing to you. We have made buying groceries relatively convenient with our seamless and easy purchasing methods and we also ensure safe and fast delivery at you.`; 
 
       await sendEmail(userEmail, emailSubject, emailText);
+      const token = createTokens(user._id, user.name, 'user');
       res.status(201).json({ success: true, user: user._id });
    } 
    catch (err) {
