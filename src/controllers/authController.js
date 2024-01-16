@@ -29,6 +29,11 @@ const handleErrors = (err) => {
       })
    }
 
+   if(err.message.includes('Validation failed')) {
+      Object.values(err.errors).forEach(({ properties }) => {
+         error[ properties.path ] = properties.message;
+      });
+   }
    // @desc duplicate keys
    if (err.code === 11000){
       error.email = 'This user has already been registered';
@@ -41,6 +46,10 @@ const handleErrors = (err) => {
 
    if (err.message === 'Incorrect password'){
       error.password = 'Incorrect password';
+   }
+
+   if (err.message === 'Password must be provided'){
+      error.password = 'Password must be provided';
    }
    return error
 }
@@ -184,17 +193,17 @@ exports.getTopDeals = async (req, res) => {
 }
 
 // @desc CHECKOUT ORDER
-// exports.checkoutOrder = async (req, res) => {
-//    const { address, apartment, town } = req.body;
-//    const { userId } = req.user
-//    try {
-//       const chekout = await CheckoutSchema.create({ userID: userId, address, apartment, town }).populate('name', 'email', 'phoneNumber');
+exports.checkoutOrder = async (req, res) => {
+   const { address, apartment, town } = req.body;
+   const { userId } = req.user
+   try {
+      const chekout = await CheckoutSchema.create({ userID: userId, address, apartment, town }).populate('name', 'email', 'phoneNumber');
 
-//    } catch (err) {
-//       console.log('Error from checkout products', err);
-//       res.status(500).json({ success: false, message: 'Something happened, we are working on it' });
-//    }
-// }
+   } catch (err) {
+      console.log('Error from checkout products', err);
+      res.status(500).json({ success: false, message: 'Something happened, we are working on it' });
+   }
+}
 
 // @desc NEW ARRIVALS
 exports.newArrival = async (req, res) => {
@@ -220,37 +229,39 @@ exports.bestSelling = async(req, res) => {
 
 // @desc EDIT PROFILE
 exports.editProfile = async (req, res) => {
-   const { name, email, address, password, confirmPassword, currentPassword } = req.body;
+   const { name, lastName, email, address, password, confirmPassword, currentPassword } = req.body;
    const { userId } = req.user;
    try {
-      const salt = await bcrypt.genSalt();
-      const hashPassword = await bcrypt.hash(password, salt);
-      const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
-
-      const profile = await UserSchema.findOneAndUpdate({_id: userId }, {
-         name: name,
-         email: email,
-         address: address,
-         password: hashPassword,
-         confirmPassword: hashConfirmPassword
-      }, { new: true, runValidators: true });
-
-      if (password !== confirmPassword) {
-         return res.status(401).json({ sucess: false, confirmErrorMessage: 'Password do not match'});
-      }
-
       const findUser = await UserSchema.findOne({ _id: userId });
       if(findUser) {
-         const authUser = await bcrypt.compare(currentPassword, findUser.password);
-         if(authUser) return authUser;
-      } else{
-         return res.status(404).json({ success: false, profile, message: 'Password Incorrect'});
+            const authUser = await bcrypt.compare(currentPassword, findUser.password);
+            if(authUser) {
+               let updateFields = { name, lastName, email, address }
+            
+
+               if(password && confirmPassword){
+                  if (password !== confirmPassword) {
+                     return res.status(404).json({ sucess: false, confirmErrorMessage: 'Password do not match'});
+                  }
+                  const salt = await bcrypt.genSalt();
+                  const hashPassword = await bcrypt.hash(password, salt);
+                  updateFields.password = hashPassword;
+               }
+
+               const profile = await UserSchema.findOneAndUpdate({ _id: userId }, updateFields, { 
+                  new: true, runValidators: true 
+               });
+               
+               res.status(200).json({ success: true, profile, message: 'Information changed successfully' });
+         } else{
+         throw Error('Incorrect password');
+         }
       }
 
-      res.status(200).json({ success: true, message: 'Information changed successfully' });
    } catch (err) {
       console.log(`Error from edit profile`, err);
-      res.status(500).json({ success: false, message: 'Request could not be completed' });
+      const error = handleErrors(err);
+      res.status(500).json({ success: false, error });
    }
 }
 
@@ -308,20 +319,4 @@ exports.userPayment = async(req, res) => {
       console.log('Error from payment', err);
       res.status(500).json({ success: false, message: 'Request could not be completed' });
    }
-}
-
-// @desc ADDING TO CART
-exports.addToCart = async (req, res) => {
- const { productId } = req.params;
- const { quantity } = req.body;
- const { userId } = req.user
- try {
-   const checkUser = await UserSchema.find({ _id: userId });
-   if(!checkUser) {
-      
-   }
- } catch (err) {
-   console.log('Error from add to cart', err);
-   res.status(500).json({ success: false, message: 'Request could not be completed' });
- }
 }

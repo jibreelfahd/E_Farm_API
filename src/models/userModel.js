@@ -8,12 +8,20 @@ const userSchema = new Schema({
       type: String,
       required: [true, 'Please enter your fullname']
    },
+   lastName: {
+      type: String,
+      default: null 
+   },
    email: {
       type: String,
       required: [true, 'Please enter an email'],
       unique: true,
       validate: [isEmail, 'Enter a valid email'],
       lowercase: true
+   },
+   address: {
+      type: String,
+      default: null
    },
    phoneNumber: {
       type: Number,
